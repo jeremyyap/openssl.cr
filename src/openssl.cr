@@ -1,9 +1,9 @@
-require "./lib/lib_ssl"
+require "openssl"
 
 module OpenSSL
   class OpenSSLError < Exception
     getter err
-    getter err_msg = ""
+    getter err_msg
 
     def initialize(msg = nil)
       unless (err = @err = LibCrypto.get_error) == 0
@@ -14,15 +14,12 @@ module OpenSSL
     end
   end
 
-  LibSSL.ssl_library_init()
-  LibSSL.openssl_add_all_algorithms()
-  LibSSL.err_load_crypto_strings()
-  LibSSL.ssl_load_error_strings()
 end
 
-require "./digest/*"
-require "./cipher/*"
+lib LibCrypto
+  alias EVP_PKEY = Void*
+end
+
 require "./bio/*"
+require "./lib/*"
 require "./pkey/*"
-require "./x509/*"
-require "./ssl/*"

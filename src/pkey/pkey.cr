@@ -8,7 +8,7 @@ module OpenSSL
       raise PKeyError.new "Invalid EVP_PKEY" unless @pkey
     end
 
-    def initialize(is_private)
+    def initialize(is_private : Bool)
       initialize(LibCrypto.evp_pkey_new(), is_private)
     end
 
@@ -59,7 +59,7 @@ module OpenSSL
     end
 
     def to_pem
-      io = IO::Memory.new
+      io = MemoryIO.new
       to_pem(io)
       io.to_s
     end

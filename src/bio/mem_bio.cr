@@ -5,7 +5,7 @@ class OpenSSL::MemBIO
 
   class BIOError < OpenSSLError; end
 
-  def initialize(@bio : LibCrypto::BIO)
+  def initialize(@bio : LibCrypto::Bio*)
     raise BIOError.new "Invalid handle" unless @bio
   end
 
@@ -30,7 +30,7 @@ class OpenSSL::MemBIO
   end
 
   def to_string
-    buf = IO::Memory.new
+    buf = MemoryIO.new
     IO.copy(self, buf)
     buf.to_s
   end
