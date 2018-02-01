@@ -1,7 +1,6 @@
 require "../openssl"
 
-class OpenSSL::MemBIO
-  include IO
+class OpenSSL::MemBIO < IO
 
   class BIOError < OpenSSLError; end
 
